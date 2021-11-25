@@ -15,6 +15,10 @@ from time import sleep
 """
 Fonctionne grace à tty0tty
 https://github.com/freemed/tty0tty
+
+avant de commencer:
+sudo chmod 666 /dev/tnt* 
+
 """
 
 if __name__ == "__main__":
