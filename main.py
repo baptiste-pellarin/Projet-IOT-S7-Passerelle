@@ -8,7 +8,7 @@
 import configparser
 import multiprocessing as mp
 
-from models import SerialConn, UDPServer, InfluxDBConn, PeriodicCheck
+from models import SerialConn, UDPServer, InfluxDBConn, PeriodicCheck, Telegraf
 from utils import root_logger
 
 main_logger = root_logger.getChild("main")
@@ -31,6 +31,8 @@ if __name__ == "__main__":
         configuration["INFLUXDB"]["URL"], configuration["INFLUXDB"]["TOKEN"], configuration["INFLUXDB"]["DATABASE"]
     )
 
+    telegraf_conn = Telegraf("localhost", 8094)
+
     main_logger.info("Initialisation du serveur UDP")
     udp_server = UDPServer(
         serial_queue,
@@ -47,7 +49,7 @@ if __name__ == "__main__":
         udp_queue,
         mutex_serial,
         mutex_udp,
-        influxdb_conn,
+        telegraf_conn,
         ttydir=configuration["SERIAL"]["DIR"],
         ttyspeed=configuration["SERIAL"]["SPEED"],
     )

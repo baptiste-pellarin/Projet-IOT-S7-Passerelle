@@ -29,7 +29,7 @@ class SerialConn:
         udp_queue: mp.Queue,
         mutex_serial: mp.Semaphore,
         mutex_udp: mp.Semaphore,
-        influxdb_conn: InfluxDBConn,
+        influxdb_conn,
         ttydir: str,
         ttyspeed=11500,
     ):
@@ -114,7 +114,7 @@ class SerialConn:
 
             self.mutex_block_serial.acquire()  # On empêche l'utilisation de la liaison série
 
-            self.serial_conn.write(bytes(message, "UTF-8"))
+            self.serial_conn.write(bytes(message[:-2], "UTF-8"))
             class_logger.info("Ecriture : %s" % message)
 
             self.mutex_block_serial.release()  # On autorise l'utilisation de la liaison série
