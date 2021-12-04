@@ -18,7 +18,7 @@ class Telegraf:
 
     def send_data(self, temperature, lumens, no_capteur, time=None):
         data = json.dumps(
-            {'no_capteur': no_capteur, "temperature": temperature, "lumens": lumens, "time": time or tm.time()})
+            {'no_capteur': no_capteur, "temperature": temperature, "lumens": lumens, "time": time or int(tm.time())})
         try:
             sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
             sock.sendto(bytes(data, "UTF-8"),
