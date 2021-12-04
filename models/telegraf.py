@@ -17,8 +17,7 @@ class Telegraf:
         self.port = port
 
     def send_data(self, temperature, lumens, no_capteur, time=None):
-        data = json.dumps(
-            {'no_capteur': no_capteur, "temperature": temperature, "lumens": lumens, "time": time or int(tm.time())})
+        data = f"data_capteurs,no_capteur={no_capteur} temperature={temperature}i,lumens={lumens}i,no_capteur=\"{no_capteur}\" {int(tm.time_ns())}"
         try:
             sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
             sock.sendto(bytes(data, "UTF-8"),
