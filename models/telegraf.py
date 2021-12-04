@@ -1,8 +1,9 @@
 """"
 La raspberry ne peut pas faire tourner InfluxDB
 """
-import json, socket
-from datetime import datetime
+import json
+import socket
+import time as tm
 
 from utils import root_logger
 
@@ -17,7 +18,7 @@ class Telegraf:
 
     def send_data(self, temperature, lumens, no_capteur, time=None):
         data = json.dumps(
-            {'no_capteur': no_capteur, "temperature": temperature, "lumens": lumens, "time": time or datetime.utcnow()})
+            {'no_capteur': no_capteur, "temperature": temperature, "lumens": lumens, "time": time or tm.time()})
         try:
             sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
             sock.sendto(bytes(data, "UTF-8"),
