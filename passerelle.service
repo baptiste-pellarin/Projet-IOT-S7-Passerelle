@@ -1,0 +1,14 @@
+[Unit]
+Description=Passerelle IoT
+Documentation=https://github.com/baptiste-pellarin/Projet-IOT-S7-Passerelle
+After=network.target
+
+[Service]
+WorkingDirectory=/opt/Projet-IOT-S7-Passerelle/
+ExecStart=/opt/Projet-IOT-S7-Passerelle/venv/bin/python main.py
+Restart=on-failure
+RestartForceExitStatus=SIGPIPE
+KillMode=control-group
+
+[Install]
+WantedBy=multi-user.target
