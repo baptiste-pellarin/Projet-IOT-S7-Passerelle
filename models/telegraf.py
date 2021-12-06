@@ -12,17 +12,21 @@ class_logger = root_logger.getChild("telegraf")
 
 
 class Telegraf:
+    """
+    Connexion au socket udp telegraf
+    """
+
     def __init__(self, host, port):
         self.host = host
         self.port = port
 
-        self.capitals = json.loads(open("./country-capitals.json", "r").read())
+        self.capitals = json.loads(open("./country-capitals.json", "r").read())  # Données pour simuler que les capteurs sont dans plusieurs pays
 
     def send_data(self, temperature, lumens, no_capteur, time=None):
 
         data = self.get_influx_query(temperature, lumens, no_capteur, fake_data=True)
         try:
-            sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+            sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)  # Connexion au socket telegraf
             sock.sendto(
                 bytes(data, "UTF-8"),
                 (
@@ -38,8 +42,7 @@ class Telegraf:
     def get_influx_query(self, temperature, lumens, no_capteur, fake_data=False) -> str:
         capteur = {"code": None, "lat": None, "long": None}
         if fake_data:
-            country = random.choice(self.capitals)
-            print(country)
+            country = random.choice(self.capitals)  # Récupération des coordonnées d'un pays au hasard dans la liste
             capteur["code"] = country.get("CountryCode")
             capteur["lat"] = float(country.get("CapitalLatitude", 0))
             capteur["long"] = float(country.get("CapitalLongitude", 0))

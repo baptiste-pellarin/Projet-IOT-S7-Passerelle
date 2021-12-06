@@ -9,7 +9,6 @@ import multiprocessing as mp
 
 import serial
 
-from models import InfluxDBConn
 from utils import root_logger
 
 class_logger = root_logger.getChild("lecture_serial")
@@ -54,7 +53,7 @@ class SerialConn:
         self.mutex_block_serial: mp.Semaphore = mp.Semaphore(1)
         self.mutex_udp: mp.Semaphore = mutex_udp
 
-        self.influxdb_conn: InfluxDBConn = influxdb_conn
+        self.influxdb_conn = influxdb_conn
 
         self.serial_conn = serial.Serial(self.ttydir, self.ttyspeed)
 

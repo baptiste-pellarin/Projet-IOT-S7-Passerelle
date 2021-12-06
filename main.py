@@ -31,7 +31,7 @@ if __name__ == "__main__":
         configuration["INFLUXDB"]["URL"], configuration["INFLUXDB"]["TOKEN"], configuration["INFLUXDB"]["DATABASE"]
     )
 
-    telegraf_conn = Telegraf("localhost", 8094)
+    telegraf_conn = Telegraf(configuration["TELEGRAF"]["HOST"], configuration["TELEGRAF"]["PORT"])
 
     main_logger.info("Initialisation du serveur UDP")
     udp_server = UDPServer(

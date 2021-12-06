@@ -18,7 +18,6 @@ class_logger = root_logger.getChild("influxdb")
 class InfluxDBConn:
     """
     Connexion à InfluxDB et transmission des données
-
     """
 
     def __init__(self, url: str, token: str, database: str):
